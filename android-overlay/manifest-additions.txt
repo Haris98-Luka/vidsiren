@@ -1,0 +1,10 @@
+android/app/src/main/AndroidManifest.xml mein:
+1) <manifest> tag mein ye add karein: xmlns:tools="http://schemas.android.com/tools"
+2) <manifest> ke andar permissions:
+   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+   <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+3) <application> ke andar:
+   <service android:name=".AlarmService" android:exported="false">
+     <intent-filter><action android:name="com.google.firebase.MESSAGING_EVENT"/></intent-filter>
+   </service>
+   <service android:name="com.capacitorjs.plugins.pushnotifications.MessagingService" tools:node="remove"/>

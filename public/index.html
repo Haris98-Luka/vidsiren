@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="ur"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VidSiren</title><meta name="theme-color" content="#12082E">
+<link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon.svg"><link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12082E;--bg2:#1E0F4F;--card:#2A1670;--mag:#FF2E88;--vio:#7A4DFF;--amb:#FFB000;--ice:#F3EEFF;--mut:#B3A6E6;--ink:#0A0420}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Bricolage Grotesque',system-ui,sans-serif;background:radial-gradient(90% 50% at 85% -5%,#5A2BEA 0,transparent 65%),radial-gradient(60% 40% at 0 100%,#ff2e8833 0,transparent 70%),var(--bg);background-attachment:fixed;color:var(--ice);min-height:100vh;padding:max(16px,env(safe-area-inset-top)) clamp(14px,4vw,40px) max(60px,env(safe-area-inset-bottom))}
+.wrap{max-width:1040px;margin:auto}
+header{display:flex;align-items:center;gap:clamp(12px,2.5vw,22px);margin:6px 0 clamp(18px,4vw,34px)}
+header img{width:clamp(56px,11vw,92px);height:auto;aspect-ratio:1;border-radius:24%;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--mag)}
+h1{font-size:clamp(40px,9vw,84px);font-weight:800;letter-spacing:-.04em;line-height:.9}
+.sub{color:var(--mut);font-size:clamp(14px,2.4vw,18px);margin-top:8px}
+.eq{margin-left:auto;display:flex;align-items:flex-end;gap:4px;height:clamp(34px,7vw,56px)}
+.eq i{width:clamp(6px,1.2vw,10px);background:var(--amb);border-radius:3px;animation:b 1s ease-in-out infinite alternate;height:100%;transform-origin:bottom}
+.eq i:nth-child(2){animation-delay:-.3s;background:var(--mag)}.eq i:nth-child(3){animation-delay:-.6s}.eq i:nth-child(4){animation-delay:-.15s;background:var(--mag)}.eq i:nth-child(5){animation-delay:-.45s}
+@keyframes b{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
+.search{display:flex;gap:10px;background:var(--bg2);border:3px solid var(--ink);border-radius:22px;padding:8px;box-shadow:6px 6px 0 var(--vio)}
+.search input{flex:1;min-width:0;background:none;border:0;color:var(--ice);font:inherit;font-weight:500;font-size:clamp(16px,2.6vw,20px);padding:12px 14px;outline:none}
+.search input::placeholder{color:#8f80d0}
+.search:focus-within{box-shadow:6px 6px 0 var(--amb)}
+button{font:inherit;cursor:pointer;border:0;color:#fff;touch-action:manipulation}
+button:focus-visible,input:focus-visible{outline:3px solid var(--amb);outline-offset:2px}
+.add{background:var(--mag);color:var(--ink);font-weight:800;font-size:clamp(16px,2.4vw,19px);padding:0 clamp(20px,4vw,38px);border-radius:15px;border:3px solid var(--ink);min-height:52px}
+.add:active,.chip:active{transform:translate(3px,3px)}
+.bar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 12px}
+.chip{background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:14px 10px;font-weight:800;font-size:clamp(13px,2.4vw,17px);box-shadow:4px 4px 0 var(--ink);min-height:52px}
+.chip.on{background:var(--amb);color:var(--ink)}
+#msg{min-height:22px;font-size:15px;font-weight:500;color:var(--amb);margin:4px 4px 14px}
+h2{font-size:clamp(22px,4vw,30px);font-weight:800;margin:10px 0 14px;letter-spacing:-.02em}
+#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:16px}
+.card{display:flex;align-items:center;gap:14px;background:var(--card);border:3px solid var(--ink);border-radius:22px;padding:14px;box-shadow:6px 6px 0 var(--mag)}
+.card:nth-child(3n+2){box-shadow:6px 6px 0 var(--amb)}.card:nth-child(3n){box-shadow:6px 6px 0 var(--vio)}
+.card img{width:62px;height:62px;border-radius:50%;object-fit:cover;background:var(--bg2);border:3px solid var(--ink);flex:none}
+.card div{flex:1;min-width:0}.card b{display:block;font-size:18px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card small{color:var(--mut);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px;font-size:13px}
+.del{background:var(--ink);width:44px;height:44px;border-radius:14px;font-size:18px;flex:none}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:44px 14px;border:3px dashed #5b4aa8;border-radius:24px;line-height:1.7;font-size:17px}
+#alarm{position:fixed;inset:0;background:radial-gradient(circle,#ff2e88,#7a0b3e);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;z-index:9;animation:fl .6s infinite alternate}
+#alarm.show{display:flex}#alarm h3{font-size:clamp(34px,8vw,64px);font-weight:800}#alarm p{font-size:clamp(17px,3vw,24px);max-width:520px}
+#alarm .stop{background:#fff;color:#7a0b3e;font-weight:800;font-size:22px;padding:18px 44px;border-radius:50px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+@keyframes fl{to{filter:brightness(1.35)}}
+@media(max-width:380px){.bar{grid-template-columns:1fr}.eq{display:none}}
+@media(min-width:900px){.bar{max-width:640px}}
+@media(prefers-reduced-motion:reduce){#alarm,.eq i{animation:none}}
+</style></head><body><div class="wrap">
+<header><img src="/icon.svg" alt="VidSiren logo"><div><h1>VidSiren</h1><div class="sub">Naya video aaye, alarm baje</div></div><div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></header>
+<form class="search" id="f"><input id="u" type="text" inputmode="url" placeholder="YouTube channel ka link paste karein" autocomplete="off" aria-label="YouTube channel link"><button class="add" type="submit">Save</button></form>
+<div class="bar"><button class="chip" id="nb" type="button">🔔 Notifications on karein</button><button class="chip" id="tb" type="button">🔊 Alarm test</button></div>
+<div id="msg" role="status"></div><h2>Saved channels</h2><div id="list"></div></div>
+<div id="alarm"><h3>🚨 Naya video!</h3><p id="at"></p><button class="stop" id="st">Alarm band karein</button></div>
+<script>
+const $=id=>document.getElementById(id);let ch=[];try{ch=JSON.parse(localStorage.vs||'[]')}catch(e){}
+const save=()=>{try{localStorage.vs=JSON.stringify(ch)}catch(e){}};
+const say=t=>{$('msg').textContent=t};
+function render(){$('list').innerHTML=ch.length?'':'<div class="empty">Abhi koi channel save nahi hai.<br>Upar channel ka link paste karke Save dabayein.</div>';
+ ch.forEach((c,i)=>{const d=document.createElement('div');d.className='card';
+ d.innerHTML='<img alt=""><div><b></b><small></small></div><button class="del" aria-label="Hatayein">✕</button>';
+ d.querySelector('img').src=c.img||'/icon.svg';d.querySelector('b').textContent=c.name;d.querySelector('small').textContent=c.title||'';
+ d.querySelector('.del').onclick=()=>{ch.splice(i,1);save();render();sync()};$('list').append(d)})}
+async function sub(){const r=await navigator.serviceWorker.ready;return r.pushManager.getSubscription()}
+async function sync(){try{const s=await sub();if(!s)return;await fetch('/api/sync',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({sub:s.toJSON(),channels:ch.map(({id,name,last})=>({id,name,last}))})})}catch(e){}}
+$('f').onsubmit=async e=>{e.preventDefault();const v=$('u').value.trim();if(!v)return;say('Channel dhoond rahi hoon…');
+ try{const r=await fetch('/api/resolve?url='+encodeURIComponent(v));const d=await r.json();if(!r.ok)throw d.error;
+ if(ch.some(c=>c.id===d.id))return say('Ye channel pehle se saved hai');ch.unshift(d);save();render();sync();$('u').value='';say('✅ '+d.name+' save ho gaya')}catch(x){say(x||'Kuch masla hua, dobara try karein')}};
+function b64(s){const p='='.repeat((4-s.length%4)%4),r=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(r,c=>c.charCodeAt(0))}
+$('nb').onclick=async()=>{try{if(await Notification.requestPermission()!=='granted')return say('Notification ki ijazat dein (browser settings)');
+ const {key}=await(await fetch('/api/vapid')).json();if(!key)return say('Server par VAPID key set nahi hai');
+ const r=await navigator.serviceWorker.ready;await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(key)});
+ $('nb').textContent='🔔 Notifications on hain';$('nb').classList.add('on');await sync();say('✅ Ab naye video par alert aayega')}catch(e){say('Notifications on nahi ho sakin: '+e.message)}};
+let ac,iv,osc,g;function siren(){ac=ac||new AudioContext();ac.resume();osc=ac.createOscillator();g=ac.createGain();osc.type='sawtooth';g.gain.value=.5;osc.connect(g).connect(ac.destination);osc.start();let hi=0;
+ const t=()=>{osc.frequency.linearRampToValueAtTime(hi?1300:650,ac.currentTime+.45);hi^=1};t();iv=setInterval(t,450);navigator.vibrate&&navigator.vibrate([500,200,500,200,500,200,500,200,500])}
+function quiet(){clearInterval(iv);try{osc.stop()}catch(e){}$('alarm').classList.remove('show')}
+function ring(t){$('at').textContent=t;$('alarm').classList.add('show');siren()}
+$('st').onclick=quiet;$('tb').onclick=()=>ring('Ye alarm ka test hai');
+if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js');navigator.serviceWorker.addEventListener('message',e=>{if(e.data.type==='alarm')ring((e.data.d.channel||'')+': '+(e.data.d.title||''))});
+ sub().then(s=>{if(s){$('nb').textContent='🔔 Notifications on hain';$('nb').classList.add('on');sync()}})}
+render();
+</script><script src="/native.js"></script></body></html>
