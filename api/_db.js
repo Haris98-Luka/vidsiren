@@ -1,2 +1,3 @@
-const {Redis}=require('@upstash/redis');
-module.exports=new Redis({url:process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL,token:process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN});
+const Redis=require('ioredis');
+let c;
+module.exports=new Proxy({},{get:(_,k)=>{c=c||new Redis(process.env.REDIS_URL,{maxRetriesPerRequest:2,connectTimeout:8000});return c[k].bind(c)}});
